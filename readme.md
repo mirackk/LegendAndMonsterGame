@@ -1,9 +1,6 @@
-# CS611-<Assignment 2>
 ## Monster and Legend
 ---------------------------------------------------------------------------
-Taoyu Chen 
-mirack@bu.edu
-U82740711
+Taoyu(Mirack) Chen 
 
 ## Compiling Instruction
 ---------------------------------------------------------------------------
