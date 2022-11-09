@@ -50,6 +50,7 @@ public abstract class Hero extends Role {
         }
         int requireExp = 10 * this.level;
         while (this.experience >= requireExp) { // hero might level up 2 levels or more.
+            System.out.println("Hero " + name);
             System.out.println("LEVEL UP!");
             this.level += 1;
             this.hp = Math.max(level * 100, this.hp);
@@ -95,6 +96,11 @@ public abstract class Hero extends Role {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nHere are your items in the bag: ");
         bag.printItems();
+        System.out.println("\nDo you want to equip? [Q/q] to quit else continue");
+        String ans = sc.nextLine();
+        if (ans.equalsIgnoreCase("q")) {
+            return;
+        }
         System.out.println("which do you want to equip?");
         System.out.println("Enter a number, for top to bottom on Weapon list, the first one is 0, second one is 1...");
         int index = sc.nextInt();
@@ -105,22 +111,22 @@ public abstract class Hero extends Role {
         if (tmpItem instanceof Weapon) {
             if (weapon == null) {
                 setWeapon((Weapon) tmpItem);
-                System.out.println("You have equipped: "+ tmpItem.name);
+                System.out.println("You have equipped: " + tmpItem.name);
             } else {
                 Item undressed = weapon;
                 bag.addItem(undressed);
                 setWeapon((Weapon) tmpItem);
-                System.out.println("You have equipped: "+ tmpItem.name);
+                System.out.println("You have equipped: " + tmpItem.name);
             }
         } else if (tmpItem instanceof Armor) {
             if (armor == null) {
                 setArmor((Armor) tmpItem);
-                System.out.println("You have equipped: "+ tmpItem.name);
+                System.out.println("You have equipped: " + tmpItem.name);
             } else {
                 Item undressed = armor;
                 bag.addItem(undressed);
                 setArmor((Armor) tmpItem);
-                System.out.println("You have equipped: "+ tmpItem.name);
+                System.out.println("You have equipped: " + tmpItem.name);
             }
         } else {
             System.out.println("equipment error, type wrong");
@@ -133,6 +139,11 @@ public abstract class Hero extends Role {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nHere are your items in the bag: ");
         bag.printItems();
+        System.out.println("\nDo you want to use Potion? [Q/q] to quit else continue");
+        String ans = sc.nextLine();
+        if (ans.equalsIgnoreCase("q")) {
+            return;
+        }
         System.out.println("which do you want to drink?");
         System.out.println("Enter a number, for top to bottom on Potion list, the first one is 0, second one is 1...");
         int index = sc.nextInt();

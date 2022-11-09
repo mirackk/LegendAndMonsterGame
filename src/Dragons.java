@@ -1,3 +1,4 @@
+//monster
 public class Dragons extends Monster {
     private String monsterType;
 

@@ -36,6 +36,7 @@ public class FightCell extends Cell {
                 int level = hero.getLevel();
                 monsters[i] = monsterFactory.create(config, level);
                 monsters[i].printMonsterInfo();
+                System.out.println("");
             }
             FightFlow(team);
         } else {
@@ -70,34 +71,33 @@ public class FightCell extends Cell {
     public void FightFlow(Team team) {
         // flag =1 heroes win; 2 monsters win
         int flag = 0;
-        while(true){
+        while (true) {
             int deadHeroes = 0;
             int deadMonsters = 0;
             heroTurns(team);
-            for(Monster monster:monsters){
-                if(monster.hp<=0){
-                    deadMonsters+=1;
+            for (Monster monster : monsters) {
+                if (monster.hp <= 0) {
+                    deadMonsters += 1;
                 }
             }
-            if(deadMonsters==monsters.length){
-                flag=1;
+            if (deadMonsters == monsters.length) {
+                flag = 1;
                 break;
             }
             monsterTurns(team);
-            for(Hero hero:team.getHeroes()){
-                if(hero.hp<=0){
-                    deadHeroes+=1;
+            for (Hero hero : team.getHeroes()) {
+                if (hero.hp <= 0) {
+                    deadHeroes += 1;
                 }
             }
-            if(deadHeroes==team.getTeamSize()){
-                flag=2;
+            if (deadHeroes == team.getTeamSize()) {
+                flag = 2;
                 break;
             }
         }
-        if(flag==1){
+        if (flag == 1) {
             afterFight(team);
-        }
-        else if (flag==2){
+        } else if (flag == 2) {
             System.out.println("All heroes dead! Game over");
             System.exit(0);
         }
@@ -125,10 +125,9 @@ public class FightCell extends Cell {
                     }
                 } else if (input.equalsIgnoreCase("q")) {
                     return;
-                }
-                else if(input.equalsIgnoreCase("skip")){
+                } else if (input.equalsIgnoreCase("skip")) {
                     break;
-                }else if (input.equalsIgnoreCase("h")) {
+                } else if (input.equalsIgnoreCase("h")) {
                     printCMD();
                 } else if (input.equalsIgnoreCase("a")) {
                     System.out.println("Which monster do you want to attack");
@@ -152,6 +151,7 @@ public class FightCell extends Cell {
                     System.out.println("wrong input, try again");
                 }
             }
+            System.out.println("");
         }
     }
 
@@ -171,23 +171,21 @@ public class FightCell extends Cell {
             int num = rd.nextInt(size);
             Hero hero = team.getHeroes()[num];
 
-            int originDamage = (int)(monster.getDamage()*0.1);
+            int originDamage = (int) (monster.getDamage() * 0.1);
             int actualDamage;
-            if(hero.armor!=null){
-                actualDamage = originDamage - (int)(hero.defense*0.1+hero.armor.getReduction()*0.1);
-            }
-            else{
+            if (hero.armor != null) {
+                actualDamage = originDamage - (int) (hero.defense * 0.1 + hero.armor.getReduction() * 0.1);
+            } else {
                 actualDamage = originDamage;
             }
 
-            double dodgeRate = hero.agility*0.002;
+            double dodgeRate = hero.agility * 0.002;
             double rate = Math.random();
-            if(rate<dodgeRate){
-                System.out.println("Monster "+monster.getName()+" misses attack on "+hero.getName());
+            if (rate < dodgeRate) {
+                System.out.println("Monster " + monster.getName() + " misses attack on " + hero.getName());
                 continue;
-            }
-            else{
-                System.out.println("Monster "+monster.getName()+" attacks "+hero.getName()+" with "+actualDamage+" hp");
+            } else {
+                System.out.println("Monster " + monster.getName() + " attacks " + hero.getName() + " with " + actualDamage + " hp");
                 hero.minusHp(actualDamage);
             }
         }
@@ -198,37 +196,36 @@ public class FightCell extends Cell {
     // when hero gets exp, I check if he can level up
     // if lose quit the game
     public void afterFight(Team team) {
-        for(Hero hero:team.getHeroes()){
-            if(hero.hp>0){
+        for (Hero hero : team.getHeroes()) {
+            if (hero.hp > 0) {
                 recover(hero);
                 reward(hero);
                 hero.levelUp();
-            }
-            else{
+            } else {
                 revive(hero);
             }
         }
     }
 
     // can get exp = 2*number of monsters, gold = 100*monster level
-    public void reward(Hero hero){
-        hero.updateExp(monsters.length*2);
-        for(Monster monster:monsters){
+    public void reward(Hero hero) {
+        hero.updateExp(monsters.length * 2);
+        for (Monster monster : monsters) {
             int level = monster.getLevel();
-            hero.updateGold(level*100);
+            hero.updateGold(level * 100);
         }
     }
 
     // one can recover some hp and mp after fight
     public void recover(Hero hero) {
-        hero.hp = (int)(hero.hp*1.1);
-        hero.mp = (int)(hero.mp*1.1);
+        hero.hp = (int) (hero.hp * 1.1);
+        hero.mp = (int) (hero.mp * 1.1);
     }
 
     // if one is dead but wins, he can revive but get nothing
     public void revive(Hero hero) {
-        hero.hp = (int)(hero.level*50);
-        hero.mp = (int)(hero.level*200);
+        hero.hp = (int) (hero.level * 50);
+        hero.mp = (int) (hero.level * 200);
     }
 
 }

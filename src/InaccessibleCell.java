@@ -1,5 +1,6 @@
-public class InaccessibleCell extends Cell{
-    public InaccessibleCell(Position pos){
+//heroes can not move to here
+public class InaccessibleCell extends Cell {
+    public InaccessibleCell(Position pos) {
         super(pos);
     }
 

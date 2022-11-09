@@ -1,3 +1,4 @@
+//monster
 public class Exoskeletons extends Monster {
     private String monsterType;
 
